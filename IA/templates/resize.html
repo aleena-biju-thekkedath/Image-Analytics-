@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resized Image</title>
+  
+    <link rel="icon" href="https://i.ibb.co/LgShpS0/logo2.png" type="image/png">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .logo {
+            position: absolute;
+            top: 2px;
+            right: 1px;
+        }
+
+        .resize-image-text {
+            font-family: Calibri;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .resize-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .resize-form input {
+            margin-bottom: 10px;
+        }
+
+        .resized-image {
+            max-width: 100%;
+            max-height: 80%;
+            margin-top: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .btn-primary {
+        background-color: #060606;
+        border-color: #050505;
+        }
+
+        .btn-primary:hover {
+            background-color: rgb(42, 193, 59); /* Green color when hovering */
+            border-color: rgb(0, 0, 0);
+        }
+
+        html 
+        {
+        height:100%;
+        }
+
+        body {
+        margin:0;
+        }
+
+        .bg {
+        animation:slide 3s ease-in-out infinite alternate;
+        background-image: linear-gradient(-60deg, #25ced1 50%, #ffffff 50%, #ff8a5b);
+        bottom:0;
+        left:-50%;
+        opacity:.5;
+        position:fixed;
+        right:-50%;
+        top:0;
+        z-index:-1;
+        }
+
+        .bg2 {
+        animation-direction:alternate-reverse;
+        animation-duration:4s;
+        }
+
+        .bg3 {
+        animation-duration:5s;
+        }
+
+        .content {
+        background-color:rgba(255,255,255,.8);
+        border-radius:.25em;
+        box-shadow:0 0 .25em rgba(0,0,0,.25);
+        box-sizing:border-box;
+        left:50%;
+        padding:10vmin;
+        position:fixed;
+        text-align:center;
+        top:50%;
+        transform:translate(-50%, -50%);
+        }
+
+        h1 {
+        font-family:monospace;
+        }
+
+        @keyframes slide {
+        0% {
+            transform:translateX(-25%);
+        }
+        100% {
+            transform:translateX(25%);
+        }
+        }
+    </style>
+</head>
+<body>
+    <a href="/" class="logo"><img src="https://i.ibb.co/KsZ2dTq/logo.png" alt="logo" width="160" height="100"></a>
+    <div class="container">
+        <h1 class="{% if resized_filename %}hidden{% endif %} resize-image-text">Resize Image</h1>
+        <form method="post" action="{{ url_for('resize') }}" class="{% if resized_filename %}hidden{% endif %} resize-form">
+            <div class="row">
+                <div class="col">
+                    <input type="text" class="form-control" name="width" placeholder="Width" aria-label="Width">
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" name="height" placeholder="Height" aria-label="Height">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Resize</button>
+        </form>
+
+        {% if resized_filename %}
+            <div class="{% if not resized_filename %}hidden{% endif %}">
+                <img src="{{ url_for('static', filename=resized_filename) }}" alt="Resized Image" class="resized-image">
+            </div>
+        {% endif %}
+    </div>
+    <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+</body>
+</html>
